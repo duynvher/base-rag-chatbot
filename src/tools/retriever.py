@@ -10,7 +10,7 @@ class Retriever(BaseTool):
     description: str = "Retrieves information in knowledge base using to answer questions."
 
     async def _arun(self, query: str) -> str:
-        documents = await knowledge_base.vector_store.asimilarity_search(query=query, k=1)
+        documents = await knowledge_base.vector_store.asimilarity_search(query=query, k=3)
         contents = [doc.page_content for doc in documents]
 
         return "\n".join(contents)
