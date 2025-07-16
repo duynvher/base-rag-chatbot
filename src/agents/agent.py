@@ -1,3 +1,5 @@
+import json
+
 from langchain_core.runnables.config import RunnableConfig
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.prebuilt import create_react_agent
@@ -11,6 +13,7 @@ class GeneralAgent:
         self.llm = ChatGoogleGenerativeAI(
             model="gemini-2.5-flash",
             temperature=0.0,
+            thinking_budget=0,
         )
 
         self.tools = [Retriever()]
@@ -29,7 +32,7 @@ class GeneralAgent:
             checkpointer=self.memory,
         )
 
-    async def astream(self, user_query: str, thread_id: str = None, user_id: str = None):
+    async def astream(self, user_query: str, thread_id: str, user_id: str = None):
         config = RunnableConfig(configurable={"thread_id": thread_id, "user_id": user_id})
         response = self.agent.astream_events(
             {"messages": [{"role": "user", "content": user_query}]}, config
@@ -37,4 +40,5 @@ class GeneralAgent:
 
         async for chunk in response:
             if chunk["event"] == "on_chat_model_stream":
-                yield chunk["data"]["chunk"].content
+                data = chunk["data"]["chunk"]
+                yield json.dumps({"id": data.id, "content": data.content}, ensure_ascii=False)
