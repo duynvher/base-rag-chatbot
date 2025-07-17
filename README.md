@@ -25,6 +25,8 @@ docker compose up -d
 
 ## Sample Request
 
+Access API docs, visit: http://localhost:6868/docs
+
 ```curl
 curl -X 'POST' \
   'http://localhost:6868/v1/chat' \
@@ -36,6 +38,14 @@ curl -X 'POST' \
   "user_id": "user"
 }'
 ```
+
+## App Demo
+Access the Chainlit demo, visit: http://localhost:6769
+<img src="assert/demo.png" alt="demo">
+
+Flow:
+- **Turn 1**: Context not updated
+- **Turn 2**: After context is updated
 
 ## Contact
 For questions or feedback:
