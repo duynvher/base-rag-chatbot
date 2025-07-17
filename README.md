@@ -40,7 +40,7 @@ curl -X 'POST' \
 ```
 
 ## App Demo
-Access the Chainlit demo, visit: http://localhost:6769
+Access the Chainlit demo, visit: http://localhost:6869
 <img src="assert/demo.png" alt="demo">
 
 Flow:
