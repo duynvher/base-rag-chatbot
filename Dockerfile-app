@@ -6,10 +6,9 @@ RUN apt-get update && \
         curl \
         && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /home/base-rag-chatbot
+WORKDIR /
+ENV PYTHONPATH=.
 
-COPY ../requirements.txt .
+RUN pip install --no-cache-dir chainlit
 
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY .. .
+COPY demo demo
