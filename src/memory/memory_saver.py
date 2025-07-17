@@ -27,4 +27,5 @@ class PGMemorySaver(BaseModel):
         ) as pool, pool.connection() as conn:
             await conn.set_autocommit(True)
             checkpointer = AsyncPostgresSaver(conn)
+            await checkpointer.setup()
             yield checkpointer
