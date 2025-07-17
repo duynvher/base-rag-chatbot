@@ -7,6 +7,16 @@ from langgraph.prebuilt import create_react_agent
 from src.memory.memory_saver import PGMemorySaver
 from src.tools.retriever import Retriever
 
+instruction = """You are a helpful support person, answering user questions based on the context provided.
+
+For questions about information you are unsure of, use the Retriever tool to search for information and answers.
+If no useful context is found, respond you have not been updated on this information yet (flexible).
+No mention of databases or database related actions.
+Do not provide information that is not relevant to the user's question.
+
+Always stay helpful, clear, and grounded in facts.
+"""
+
 
 class GeneralAgent:
     def __init__(self):
@@ -18,9 +28,13 @@ class GeneralAgent:
 
         self.tools = [Retriever()]
 
+        self.prompt = instruction
+
     async def astream(self, user_query: str, thread_id: str, user_id: str = None):
         async with PGMemorySaver().get_checkpointer() as checkpointer:
-            graph = create_react_agent(self.llm, tools=self.tools, checkpointer=checkpointer)
+            graph = create_react_agent(
+                self.llm, tools=self.tools, checkpointer=checkpointer, prompt=self.prompt
+            )
             config = RunnableConfig(configurable={"thread_id": thread_id, "user_id": user_id})
             response = graph.astream_events(
                 {"messages": [{"role": "user", "content": user_query}]}, config
