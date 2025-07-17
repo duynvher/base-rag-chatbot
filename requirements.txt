@@ -1,0 +1,13 @@
+fastapi==0.116.1
+uvicorn==0.35.0
+
+langchain==0.3.26
+langgraph==0.5.3
+langgraph_checkpoint_postgres==2.0.23
+langchain_postgres==0.0.15
+langchain_google_genai==2.1.8
+
+psycopg_binary==3.2.9
+asyncpg==0.30.0
+
+python_multipart==0.0.20
