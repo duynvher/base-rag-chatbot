@@ -16,3 +16,12 @@ class ChatRequest(BaseModel):
     query: str
     thread_id: str
     user_id: Optional[str] = None
+
+
+class ConversationData(BaseModel):
+    query: Optional[str] = None
+    response: Optional[str] = None
+    tool_content: Optional[str] = None
+    latency: Optional[float] = None
+    timestamp: Optional[int] = None
+    metadata: Optional[dict] = None

@@ -22,8 +22,8 @@ class PGMemorySaver(BaseModel):
         Handles connection pool creation and cleanup.
         """
         async with AsyncConnectionPool(
-                conninfo=self.pg_connection_string,
-                max_size=20,
+            conninfo=self.pg_connection_string,
+            max_size=20,
         ) as pool, pool.connection() as conn:
             await conn.set_autocommit(True)
             checkpointer = AsyncPostgresSaver(conn)
