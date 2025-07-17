@@ -18,13 +18,6 @@ class GeneralAgent:
 
         self.tools = [Retriever()]
 
-        self.instruction = (
-            "You are a helpful assistant. "
-            "First, you need to use the retriever tool to get information. "
-            "Then use the retriever's information to answer the user's question. "
-            "If the information cannot be used to answer, say, 'I don't know.'"
-        )
-
     async def astream(self, user_query: str, thread_id: str, user_id: str = None):
         async with PGMemorySaver().get_checkpointer() as checkpointer:
             graph = create_react_agent(self.llm, tools=self.tools, checkpointer=checkpointer)
